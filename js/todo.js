@@ -22,11 +22,20 @@ function arrangeTasksData() {
             row += '<td>' + task.name + '</td>';
         }
 
-        row += '<td><button onclick=showEditModal(' + task.id + ',"' + task.name + '")>Edit</button></td>'
+        row += '<td>' + task.created_at + '</td>'
+            + '<td>' +
+            '<button class="btn btn-primary" onclick=showEditModal(' + task.id + ') '
+            + 'id="task_' + task.id + '"'
+            + 'data-id="' + task.id + '"'
+            + 'data-name="' + task.name + '"'
+            + 'data-is_completed="' + task.is_completed + '"'
+            + '>Edit</button> '
+            + '<button class="btn btn-danger" onclick=deleteTask(' + task.id + ')>Delete</button> '
+            + '</td>'
             + '</tr>';
         rows += row;
 
-        if ( task.is_completed ) {
+        if (task.is_completed) {
             completedTasks++;
         }
     });
@@ -60,7 +69,6 @@ function addTask(name) {
 }
 
 function editTask(id, name, isCompleted) {
-
     $.ajax({
         url: "api/index.php",
         method: "post",
@@ -82,13 +90,19 @@ function deleteTask(id) {
     });
 }
 
-function showEditModal(id, name){
+function showEditModal(id){
+
     $('#bs-example-modal-sm').modal('show');
-    $('#name').val(name);
+
+    $('#name').val($('#task_' + id).attr('data-name'));
+
+    $("#task-status select").val($('#task_' + id).attr('data-is_completed'));
 
     $('#task-status').removeClass('hidden');
 
-    $("#save-button").attr('data-id', id);
+    $("#save-button").attr('data-id', $('#task_' + id).attr('data-id'));
+
+    $(".modal-title").text('Edit Task');
 }
 
 function showAddModal() {
@@ -99,11 +113,12 @@ function showAddModal() {
     $('#task-status').addClass('hidden');
 
     $("#save-button").attr('data-id', -1);
+
+    $(".modal-title").text('Add Task');
 }
 
 
 $(document).ready(function () {
-
 
     $('#save-button').click( function () {
         var data_id = $(this).attr('data-id');
@@ -111,7 +126,10 @@ $(document).ready(function () {
         if ( data_id == -1 ) {
             // Adding task
             addTask( $('#name').val() );
-        } 
+        } else {
+            editTask(data_id, $('#name').val(), $("#task-status select").val());
+        }
+
         $('#bs-example-modal-sm').modal('hide');
     });
 });

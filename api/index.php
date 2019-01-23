@@ -34,11 +34,11 @@ if ( isset($_GET['action']) && $_GET['action'] == "getAll" ) {
             break;
 
         case 'edit':
-            $id = $_GET['id'];
-            $name = $_GET['name'];
-            $is_completed = $_GET['is_completed'];
+            $id = $_POST['id'];
+            $name = $_POST['name'];
+            $is_completed = $_POST['is_completed'];
 
-            $sql = "UPDATE users SET name=?, is_completed=? WHERE id=?";
+            $sql = "UPDATE tasks SET name=?, is_completed=? WHERE id=?";
             $stmt= $pdo->prepare($sql);
             $stmt->execute([$name, $is_completed, $id]);
 
@@ -47,7 +47,7 @@ if ( isset($_GET['action']) && $_GET['action'] == "getAll" ) {
             break;
 
         case 'delete':
-            $id = $_GET['id'];
+            $id = $_POST['id'];
 
             $q = $pdo->prepare("DELETE FROM tasks WHERE id = ?");
             $q->execute(array($id));

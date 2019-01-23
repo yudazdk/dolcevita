@@ -10,30 +10,26 @@
 <body>
 <div class="container">
 
-
     <div class="tasks-info row">
         <div class="col-md-4">Total Tasks: <span id="toal-tasks"></span></div>
         <div class="col-md-4">Completed Tasks: <span id="completed-tasks"></span></div>
         <div class="col-md-4">Remaining Tasks: <span id="remaining-tasks"></span></div>
     </div>
 
-    <div >
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
             <th>#</th>
             <th>Task Name</th>
-            <th></th>
+            <th>Created</th>
+            <th><button onclick="showAddModal()" type="button" class="btn btn-primary">Add Task</button></th>
         </tr>
         </thead>
         <tbody id="table-body">
 
         </tbody>
     </table>
-    </div>
 </div>
-
-<button onclick="showAddModal()" type="button" class="btn btn-primary">Add Task</button>
 
 <div class="modal fade" id="bs-example-modal-sm" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
