@@ -6,9 +6,13 @@ $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-
-$pdo = new PDO($dsn, 'root', '');
+try{
+    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+    $pdo = new PDO($dsn, 'root', '');
+}catch(PDOException $e){
+    echo json_encode([]);
+    return;
+}
 
 function getAllTasks($pdo) {
     $sth = $pdo->prepare("SELECT * FROM tasks");
