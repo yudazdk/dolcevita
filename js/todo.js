@@ -16,13 +16,16 @@ function arrangeTasksData() {
         var row = '<tr> '
             + '<td>' + (i+1) + '</td>';
 
+        var dateArr =  task.created_at.split(' ');
+        var convertedDate = dateArr[0].split('-').reverse().join('-') + ' ' + dateArr[1];
+
         if ( task.is_completed == 1) {
             row += '<td class="task-completed">' + task.name + '</td>';
         } else {
             row += '<td>' + task.name + '</td>';
         }
 
-        row += '<td>' + task.created_at + '</td>'
+        row += '<td>' + convertedDate + '</td>'
             + '<td>' +
             '<button class="btn btn-primary" onclick=showEditModal(' + task.id + ') '
             + 'id="task_' + task.id + '"'
