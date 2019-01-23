@@ -19,7 +19,7 @@ function arrangeTasksData() {
         var dateArr =  task.created_at.split(' ');
         var convertedDate = dateArr[0].split('-').reverse().join('-') + ' ' + dateArr[1];
 
-        if ( task.is_completed == 1) {
+        if ( task.is_completed == '1') {
             row += '<td class="task-completed">' + task.name + '</td>';
         } else {
             row += '<td>' + task.name + '</td>';
@@ -38,13 +38,13 @@ function arrangeTasksData() {
             + '</tr>';
         rows += row;
 
-        if (task.is_completed) {
+        if (task.is_completed == '1') {
             completedTasks++;
         }
     });
 
-    $("#completed-tasks" ).html(completedTasks);
-    $("#remaining-tasks" ).html(tasks.length - completedTasks);
+    $("#completed-tasks" ).text(completedTasks);
+    $("#remaining-tasks" ).text(tasks.length - completedTasks);
 
     $( "#table-body" ).html(rows);
 }
@@ -94,8 +94,7 @@ function deleteTask(id) {
 }
 
 function showEditModal(id){
-
-    $('#bs-example-modal-sm').modal('show');
+    $('#modal-task').modal('show');
 
     $('#name').val($('#task_' + id).attr('data-name'));
 
@@ -109,12 +108,14 @@ function showEditModal(id){
 }
 
 function showAddModal() {
-    $('#bs-example-modal-sm').modal('show');
+    $('#modal-task').modal('show');
 
     $('#name').val('');
 
     $('#task-status').addClass('hidden');
 
+    // This value indicates that the
+    // modal is used for adding data
     $("#save-button").attr('data-id', -1);
 
     $(".modal-title").text('Add Task');
@@ -122,7 +123,6 @@ function showAddModal() {
 
 
 $(document).ready(function () {
-
     $('#save-button').click( function () {
         var data_id = $(this).attr('data-id');
 
@@ -133,6 +133,6 @@ $(document).ready(function () {
             editTask(data_id, $('#name').val(), $("#task-status select").val());
         }
 
-        $('#bs-example-modal-sm').modal('hide');
+        $('#modal-task').modal('hide');
     });
 });
